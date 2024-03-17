@@ -11,7 +11,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.3",
+    "@emotion/babel-plugin": "^11.11.0",
+    "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
     "@tanstack/react-query": "^5.24.1",
     "react": "^18.2.0",
