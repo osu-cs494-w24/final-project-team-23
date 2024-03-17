@@ -7,9 +7,8 @@ import { css, Global } from '@emotion/react'
 import Root from './pages/Root'
 import APOD from './pages/APOD'
 import Earth from './pages/Earth'
-//import ErrorPage from './pages/ErrorPage'
-
 import App from './App'
+import Mars from './pages/Mars'
 
 const queryClient = new QueryClient()
 
@@ -27,12 +26,13 @@ const globalStyles = css`
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Root />,
+        element: <Root />,      //will wrap Error Page as an element here (handles 404 and internal errors)
         children: [
             { path: "home", element: <App /> },
             { path: "apod", element: <APOD /> },     // For APOD queries
             { path: "earth", element: <Earth /> },     // For Earth landsat queries
-            //{ path: "*", element: <ErrorPage /> },  // Catches all other paths 
+            { path: "mars", element: <Mars /> }         // Page for Mars queries
+            //{ path: "library", element: <Library /> }     (has yet to be implemented)
         ]
     }
 ])
