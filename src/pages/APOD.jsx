@@ -64,13 +64,14 @@ export default function Search() {
         h3 {
             margin-bottom: 0;
             margin-top: 50px;
+            font-size:35px;
         }
 
         p {
             margin-top: 0;
             margin-right: 10px;
             margin-left: 10px;
-
+            font-size:25px;
             text-align: left;
             padding: 20px;
             line-height: 1.75rem;
@@ -80,7 +81,7 @@ export default function Search() {
             display: block;
             margin: auto;
             max-width: 40vw;
-            height: auto;
+            max-height:30vw;
         }
     `
 
