@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { createBrowserRouter, RouterProvider} from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { css } from '@emotion/react'
 
 
 export default function Search() {
@@ -10,6 +11,78 @@ export default function Search() {
     const [inputQuery, setInputQuery] = useState(query || "")
     const [apod, setApod] = useState([])
     const [error, setError] = useState(null)
+
+    const formStyles = css`
+        input {
+            width: 10vw;
+            height: 3vh;
+            margin-right: 10px;
+
+            border-radius: 10px;
+        }
+
+        button {
+            background-color: rgba(45,45,45,1);
+            color: white;
+            border: 2px solid white;
+            border-radius: 10px;
+
+            height: 4vh;
+            width: 10vw;
+
+            &:hover {
+                background-color: rgba(70,70,70,1);
+                color: red;
+                border: 2px solid red;
+                cursor: pointer;
+            }
+        }
+    `
+
+    const outerDivStyles = css`
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+
+        height: 85vh;
+        width: 100vw;
+    `
+
+    const innerDivStyles = css`
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        background-color: rgba(255,255,255,0.75);
+        border: 3px solid white;
+        border-radius: 20px;
+
+        height: 75vh;
+        width: 45vw;
+
+        h3 {
+            margin-bottom: 0;
+            margin-top: 50px;
+        }
+
+        p {
+            margin-top: 0;
+            margin-right: 10px;
+            margin-left: 10px;
+
+            text-align: left;
+            padding: 20px;
+            line-height: 1.75rem;
+        }
+
+        img {
+            display: block;
+            margin: auto;
+            max-width: 40vw;
+            height: auto;
+        }
+    `
 
     useEffect(() => {
         const controller = new AbortController()
@@ -43,22 +116,24 @@ export default function Search() {
 
     //Displays the search box and button and the results of a successful search
     return (
-        <div>
-            <h1>APOD</h1>
-            <h3>Search for the APOD on a day by searching a date in the YYYY-MM-DD format. If you do not enter a date,
-            the image for today will be displayed.</h3>
+        <div css={outerDivStyles}>
+            <div css={innerDivStyles}>
+                <h1>Astronomy Picture of the Day</h1>
                 <form onSubmit={e => {
                     e.preventDefault()
                     setSearchParams({ q: inputQuery })
-                }}>
-                    <input value={inputQuery} onChange={e => setInputQuery(e.target.value)} />
-                <button type="submit">Search</button>
-            </form>
-            <ul>
+                }} css={formStyles}>
+                    <input value={inputQuery} placeholder="YYYY-MM-DD" onChange={e => setInputQuery(e.target.value)} />
+                    <button type="submit">Search</button>
+                </form>
+                <h3>Description</h3>
+                <p>{apod.explanation}</p>
+            </div>
+
+            <div css={innerDivStyles}>
                 <h1>Date: {apod.date}</h1>
                 <img src={apod.hdurl} alt="APOD" />
-                <p>Description: {apod.explanation}</p>
-            </ul>
+            </div>
         </div>
     )
 
