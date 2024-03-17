@@ -4,10 +4,10 @@ import { createBrowserRouter, RouterProvider} from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 
-export function Search() {
+export function Search(earthQuery) {
     const [searchParams, setSearchParams] = useSearchParams()
     const query = searchParams.get("q")
-    const [inputQuery, setInputQuery] = useState(query || "")
+    const [setInputQuery] = useState(query || "")
     const [city, setCity] = useState([])
     const [error, setError] = useState(null)
 
@@ -16,7 +16,7 @@ export function Search() {
         async function fetchSearchResults() {
             try {
                 const response = await fetch(  // API call with key and input city
-                    `https://api.api-ninjas.com/v1/geocoding?city=${inputQuery}`,
+                    `https://api.api-ninjas.com/v1/geocoding?city=${earthQuery}`,
                     { headers: { 'X-Api-Key': 'cgpte0rR946R864KonJRNQ==Xb92LrF0CJhlZu0R' } },
                     { signal: controller.signal }
                 )
@@ -29,7 +29,7 @@ export function Search() {
                 console.log("city==",city)
             } catch (err) {
                 if (err.name === "AbortError") {
-                    console.log(inputQuery)
+                    console.log(earthQuery)
                     console.log("HTTP request was aborted")
                     setError(err)
                 } else {
@@ -40,8 +40,8 @@ export function Search() {
         }
             fetchSearchResults()    // Get the results if there is a query
         return () => controller.abort()
-    }, [inputQuery])
-    //Displays the search box and button and the results of a successful search
+    }, [earthQuery])
+    // Returns the found lat and lon for a given city
     return (
             [city.latitude, city.longitude]
         )
@@ -52,10 +52,10 @@ export default function SearchEarth() {
     const [searchParams, setSearchParams] = useSearchParams()
     const query = searchParams.get("q")
     const [inputQuery, setInputQuery] = useState(query || "")
-    const [city, setCity] = useState([])
+    const [earth, setEarth] = useState([])
     const [error, setError] = useState(null)
-    const latitude = Search[0]
-    const longitude = Search[1]
+    const latitude = Search(inputQuery)[0]
+    const longitude = Search(inputQuery)[1]
 
 
     useEffect(() => {
@@ -72,8 +72,8 @@ export default function SearchEarth() {
                 console.log("== responseBody:", responseBody)
                 console.log("== responseBody list:", responseBody.list)
                 setError(null)
-                setCity(responseBody[0]);
-                console.log("city==", city)
+                setEarth(responseBody[0]);
+                console.log("earth==", earth)
             } catch (err) {
                 if (err.name === "AbortError") {
                     console.log(inputQuery)
@@ -102,7 +102,7 @@ export default function SearchEarth() {
             </form>
             <ul>
                 <li>
-                    <p>City:</p>
+                    <p>City: {earth}</p>
                 </li>
             </ul>
         </div>
