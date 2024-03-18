@@ -9,6 +9,7 @@ import APOD from './pages/APOD'
 import Earth from './pages/Earth'
 import App from './App'
 import Mars from './pages/Mars'
+import ErrorPage from './pages/ErrorPage'
 
 const queryClient = new QueryClient()
 
@@ -26,7 +27,8 @@ const globalStyles = css`
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Root />,      //will wrap Error Page as an element here (handles 404 and internal errors)
+        element: <Root />,
+        errorElement: <Root><ErrorPage /></Root>,
         children: [
             { path: "home", element: <App /> },
             { path: "apod", element: <APOD /> },     // For APOD queries
