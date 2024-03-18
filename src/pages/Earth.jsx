@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, NavLink, useParams } from 'react-router-dom'
 import { createBrowserRouter, RouterProvider} from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { css } from '@emotion/react'
 
+// Search() takes an input query of a City and uses that city to take data from the geocoding API, most importantly
+// the latitude and longitude. It returns those coordinates back to the calling place
 export function Search(inputQuery) {
     const [searchParams, setSearchParams] = useSearchParams()
     const query = searchParams.get("q")
@@ -21,7 +23,6 @@ export function Search(inputQuery) {
                     { headers: { 'X-Api-Key': 'cgpte0rR946R864KonJRNQ==Xb92LrF0CJhlZu0R' } },
                     { signal: controller.signal }
                 )
-                // API KEY - cgpte0rR946R864KonJRNQ==Xb92LrF0CJhlZu0R
                 const responseBody = await response.json()
                 setError(null)
                 console.log("city==", city)
@@ -50,7 +51,8 @@ export function Search(inputQuery) {
         )
 
 }
-
+// SearchEarth() takes the input for a city, and calls a function that calculates the Latitude and Longitude of the city
+// in order to call the NASA Earth API with a latitude and longitude
 export default function SearchEarth() {
 
     const formStyles = css`
@@ -109,11 +111,27 @@ export default function SearchEarth() {
             color: #29348E;
         }
 
+        h2 {
+            margin-bottom: 0;
+            margin-top: 35px;
+            font-size:35px;
+            color: #29348E;
+        }
+
+
         h1 {
             margin-bottom: 0;
             margin-top: 50px;
             font-size:50px;
             color: #29348E;
+        }
+
+        a {
+            color: #49B5C2;
+        }
+
+        a:hover {
+            color: #FF0000;
         }
 
         p {
@@ -138,12 +156,11 @@ export default function SearchEarth() {
         }
     `
     const [searchParams, setSearchParams] = useSearchParams()
+    const { q } = useParams();
     const query = searchParams.get("q")
     const [inputQuery, setInputQuery] = useState(query || "")
     const [earth, setEarth] = useState([])
     const [error, setError] = useState(null)
-    console.log("search1 ==", Search(inputQuery)[0])
-    console.log("search2 ==", Search(inputQuery)[1])
     const latitude = Search(inputQuery)[0]
     const longitude = Search(inputQuery)[1]
     console.log("latitude ==", latitude)
@@ -158,17 +175,11 @@ export default function SearchEarth() {
                     `https://api.nasa.gov/planetary/earth/imagery?lon=${longitude}&lat=${latitude}&date=2018-01-01&api_key=RcxPtX3fOecovjtNyb6h50kQbYp1gBcEgiiYr3TG`,
                     { signal: controller.signal }
                 )
-                // API KEY - cgpte0rR946R864KonJRNQ==Xb92LrF0CJhlZu0R
-                console.log("latitude==", latitude)
                 const responseBody = await response.json()
-                console.log("== responseBody:", responseBody)
-                console.log("== responseBody list:", responseBody.list)
                 setError(null)
                 setEarth(responseBody[0]);
-                console.log("earth==", earth)
             } catch (err) {
                 if (err.name === "AbortError") {
-                    console.log(inputQuery)
                     console.log("HTTP request was aborted")
                     setError(err)
                 } else {
@@ -177,12 +188,14 @@ export default function SearchEarth() {
                 }
             }
         }
-        fetchSearchResults2()    // get results if we have a valid lat-lon
+        if (q) {
+            fetchSearchResults2()
+        }
         return () => controller.abort()
     }, [inputQuery])
     //Displays the search box and button and the results of a successful search
     return (
-        <div>
+        <div> 
             <div css={outerDivStyles}>
                 <div css={innerDivStyles}>
             <h1>Earth Satellite Imagery</h1>
@@ -192,12 +205,73 @@ export default function SearchEarth() {
                 setSearchParams({ q: inputQuery })
                     }} css={formStyles}>
                 <input value={inputQuery} onChange={e => setInputQuery(e.target.value)} />
-                <button type="submit">Search</button>
-                    </form>
+                        <button type="submit" onClick={(e) => {
+                            {/* Reloads to the new Earth query page when a query is made  */ }
+                            e.preventDefault();
+                            window.location.reload();
+                            window.location.href = `/earth?q=${inputQuery}`;
+                        }}>Search</button>
+                    </form> {/* Lists some popular cities with good satellite imagery */}
+                    <h2>Popular Cities:</h2>
+                    <h2><NavLink
+                        to="/earth?q=Denver"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            window.location.reload();
+                            window.location.href = "/earth?q=Denver";
+                        }}
+                    >
+                        Denver
+                    </NavLink>
+                    </h2>
+                    <h2><NavLink
+                        to="/earth?q=Miami"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            window.location.reload();
+                            window.location.href = "/earth?q=Miami";
+                        }}
+                    >
+                        Miami
+                    </NavLink>
+                    </h2>
+                    <h2><NavLink
+                        to="/earth?q=Salt+Lake+City"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            window.location.reload();
+                            window.location.href = "/earth?q=Salt+Lake+City";
+                        }}
+                    >
+                        Salt Lake City
+                    </NavLink>
+                    </h2>
+                    <h2><NavLink
+                        to="/earth?q=Houston"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            window.location.reload();
+                            window.location.href = "/earth?q=Houston";
+                        }}
+                    >
+                        Houston
+                    </NavLink>
+                    </h2>
+                    <h2><NavLink
+                        to="/earth?q=San+Diego"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            window.location.reload();
+                            window.location.href = "/earth?q=San+Diego";
+                        }}
+                    >
+                        San Diego
+                    </NavLink>
+                    </h2>
                 </div>
                 <div css={innerDivStyles}>
             <ul>
-                <li>
+                <li>        {/* The NASA API call, which takes lat-lon and returns just a single satellite image as its result */}
                     <p><img src={`https://api.nasa.gov/planetary/earth/imagery?lon=${longitude}&lat=${latitude}&date=2018-01-01&dim=0.15&api_key=RcxPtX3fOecovjtNyb6h50kQbYp1gBcEgiiYr3TG`} alt="Image Loading || Data Not Found" /></p>
                 </li>
                     </ul>
