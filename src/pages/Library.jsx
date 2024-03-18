@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, NavLink } from "react-router-dom";
 import { css } from "@emotion/react";
 import { useQuery } from "@tanstack/react-query";
 
@@ -26,8 +26,8 @@ export default function Library() {
 
     const outerDivStyle = css`
         display: flex;
-        flex-direction: column;
-        justify-content: center;
+        flex-direction: row;
+        justify-content: space-around;
         align-items: center;
 
         height: 85vh;
@@ -40,16 +40,42 @@ export default function Library() {
 
     const innerDivStyle = css`
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: center;
+        align-items: center;
 
-        height: 65vh;
-        width: 75vw;
+        height: 75vh;
+        width: 45vw;
 
         background-color: rgba(255,255,255,0.75);
         border-radius: 20px;
         border: 3px solid white;
         color: black;
+
+        button {
+            background-color: rgba(45,45,45,1);
+            color: white;
+            border: 2px solid white;
+            border-radius: 20px;
+
+            height: 5vh;
+            width: 10vw;
+
+            &:hover {
+                background-color: rgba(70,70,70,1);
+                color: red;
+                border: 2px solid red;
+                cursor: pointer;
+            }
+        }
+
+        input {
+            width: 15vw;
+            height: 3vh;
+            margin-right: 10px;
+    
+            border-radius: 10px;
+        }
     `
 
     const imgStyles = css`
@@ -60,11 +86,64 @@ export default function Library() {
         margin: auto;
     `
 
+    const gridContainerStyles = css`
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+
+        margin-top: 5vh;
+
+        height: 60%;
+        width: 80%;
+
+        border: 3px solid black;
+        border-radius: 20px;
+        background-color: rgb(70, 70, 70);
+    `
+
+    const innerGridStyles = css`
+        display: grid;
+
+        height: 18vh;
+        width: 15vw;
+        
+        border: 3px solid black;
+        border-radius: 20px;
+        background-color: white;
+
+        h3 {
+            margin-bottom: 0;
+            text-align: center;
+            color: red;
+        }
+    `
+
+    const iconStyles = css`
+        height: 10vh;
+        width: auto;
+
+        display: block;
+        margin: auto;
+    `
+
+    const linkStyles = css`
+        color: black;
+        text-decoration: none;
+
+        &:hover {
+            color: red;
+            text-decoration: underline;
+            font-style: italic;
+        }
+    `
+
     return (
         <div css={outerDivStyle}>
-            <h1>NASA's Photo Library</h1>
-
             <div css={innerDivStyle}>
+                <h1>NASA's Photo Library</h1>
+
                 <form onSubmit={(e) => {
                     e.preventDefault();
                     setSearchParams({ q: imgInputQuery})
@@ -73,6 +152,38 @@ export default function Library() {
                     <button type="submit">Submit Query</button>
                 </form>
 
+                <div css={gridContainerStyles}>
+                    <NavLink css={linkStyles} to="/library?q=apollo+11">
+                        <div css={innerGridStyles}>
+                            <img src="../apollo.png" alt="Apollo 11" css={iconStyles} />
+                            <h3>Apollo 11</h3>
+                        </div>
+                    </NavLink>
+
+                    <NavLink css={linkStyles} to="/library?q=asteroid">
+                        <div css={innerGridStyles}>
+                            <img src="../asteroid.png" alt="Asteroid" css={iconStyles} />
+                            <h3>Asteroid</h3>
+                        </div>
+                    </NavLink>
+
+                    <NavLink css={linkStyles}>
+                        <div css={innerGridStyles}>
+                            <img src="../milky-way.png" alt="Milky Way" css={iconStyles} />
+                            <h3>Milky Way</h3>
+                        </div>
+                    </NavLink>
+
+                    <NavLink css={linkStyles}>
+                        <div css={innerGridStyles}>
+                            <img src="../black-hole.png" alt="Black Hole" css={iconStyles} />
+                            <h3>Black Hole</h3>
+                        </div>
+                    </NavLink>
+                </div>
+            </div>
+
+            <div css={innerDivStyle}>
                 {isLoading && <Spinner />}
                 {error && <ErrorPage />}
                 {data?.collection && data.collection.items.length > 0 && (
