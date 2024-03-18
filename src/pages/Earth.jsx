@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { createBrowserRouter, RouterProvider} from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-
+import { css } from '@emotion/react'
 
 export function Search(inputQuery) {
     const [searchParams, setSearchParams] = useSearchParams()
@@ -52,6 +52,91 @@ export function Search(inputQuery) {
 }
 
 export default function SearchEarth() {
+
+    const formStyles = css`
+        input {
+            width: 10vw;
+            height: 3vh;
+            margin-right: 10px;
+            font-size: 20px;
+            border-radius: 10px;
+        }
+
+        button {
+            background-color: rgba(45,45,45,1);
+            color: white;
+            border: 2px solid white;
+            border-radius: 10px;
+
+            height: 4vh;
+            width: 10vw;
+
+            &:hover {
+                background-color: rgba(70,70,70,1);
+                color: red;
+                border: 2px solid red;
+                cursor: pointer;
+            }
+        }
+    `
+
+    const outerDivStyles = css`
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+
+        height: 85vh;
+        width: 100vw;
+    `
+
+    const innerDivStyles = css`
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        background-color: rgba(255,255,255,0.75);
+        border: 3px solid white;
+        border-radius: 20px;
+
+        height: 75vh;
+        width: 45vw;
+
+        h3 {
+            margin-bottom: 20;
+            margin-top: 50px;
+            font-size:35px;
+            color: #29348E;
+        }
+
+        h1 {
+            margin-bottom: 0;
+            margin-top: 50px;
+            font-size:50px;
+            color: #29348E;
+        }
+
+        p {
+            margin-top: 20;
+            margin-right: 10px;
+            margin-left: 10px;
+            font-size:25px;
+            text-align: left;
+            padding: 20px;
+            line-height: 1.75rem;
+        }
+
+        img {
+            display: block;
+            margin: auto;
+            max-width: 40vw;
+            max-height:30vw;
+        }
+
+        li {
+            list-style: none;
+        }
+    `
     const [searchParams, setSearchParams] = useSearchParams()
     const query = searchParams.get("q")
     const [inputQuery, setInputQuery] = useState(query || "")
@@ -70,7 +155,7 @@ export default function SearchEarth() {
         async function fetchSearchResults2() {
             try {
                 const response = await fetch(  // API call with key and lat/lon
-                    `https://api.nasa.gov/planetary/earth/imagery?lon=${longitude}&lat=${latitude}&date=2018-01-01&dim=0.15&api_key=RcxPtX3fOecovjtNyb6h50kQbYp1gBcEgiiYr3TG`,
+                    `https://api.nasa.gov/planetary/earth/imagery?lon=${longitude}&lat=${latitude}&date=2018-01-01&api_key=RcxPtX3fOecovjtNyb6h50kQbYp1gBcEgiiYr3TG`,
                     { signal: controller.signal }
                 )
                 // API KEY - cgpte0rR946R864KonJRNQ==Xb92LrF0CJhlZu0R
@@ -92,27 +177,32 @@ export default function SearchEarth() {
                 }
             }
         }
-            fetchSearchResults2()    // get results if we have a valid lat-lon
+        fetchSearchResults2()    // get results if we have a valid lat-lon
         return () => controller.abort()
     }, [inputQuery])
     //Displays the search box and button and the results of a successful search
     return (
         <div>
-            <h1>Earth</h1>
-            <h3>Search for a satellite image of a city</h3>
+            <div css={outerDivStyles}>
+                <div css={innerDivStyles}>
+            <h1>Earth Satellite Imagery</h1>
+            <h3>Search for a satellite image of a city:</h3>
             <form onSubmit={e => {
                 e.preventDefault()
                 setSearchParams({ q: inputQuery })
-            }}>
+                    }} css={formStyles}>
                 <input value={inputQuery} onChange={e => setInputQuery(e.target.value)} />
                 <button type="submit">Search</button>
-            </form>
+                    </form>
+                </div>
+                <div css={innerDivStyles}>
             <ul>
                 <li>
-                    <p>City: {earth}</p>
-                    <p>Image: <img src={`https://api.nasa.gov/planetary/earth/imagery?lon=${longitude}&lat=${latitude}&date=2018-01-01&dim=0.15&api_key=RcxPtX3fOecovjtNyb6h50kQbYp1gBcEgiiYr3TG`} alt="image" /></p>
+                    <p><img src={`https://api.nasa.gov/planetary/earth/imagery?lon=${longitude}&lat=${latitude}&date=2018-01-01&dim=0.15&api_key=RcxPtX3fOecovjtNyb6h50kQbYp1gBcEgiiYr3TG`} alt="Image Loading || Data Not Found" /></p>
                 </li>
-            </ul>
+                    </ul>
+                </div>
+            </div>
         </div>
     )
 
