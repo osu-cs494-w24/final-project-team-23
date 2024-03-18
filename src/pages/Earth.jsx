@@ -113,7 +113,7 @@ export default function SearchEarth() {
 
         h2 {
             margin-bottom: 0;
-            margin-top: 50px;
+            margin-top: 35px;
             font-size:35px;
             color: #29348E;
         }
@@ -255,6 +255,17 @@ export default function SearchEarth() {
                         }}
                     >
                         Houston
+                    </NavLink>
+                    </h2>
+                    <h2><NavLink
+                        to="/earth?q=San+Diego"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            window.location.reload();
+                            window.location.href = "/earth?q=San+Diego";
+                        }}
+                    >
+                        San Diego
                     </NavLink>
                     </h2>
                 </div>
