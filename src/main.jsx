@@ -10,6 +10,7 @@ import Earth from './pages/Earth'
 import App from './App'
 import Mars from './pages/Mars'
 import ErrorPage from './pages/ErrorPage'
+import Library from './pages/Library'
 
 const queryClient = new QueryClient()
 
@@ -33,8 +34,8 @@ const router = createBrowserRouter([
             { path: "home", element: <App /> },
             { path: "apod", element: <APOD /> },     // For APOD queries
             { path: "earth", element: <Earth /> },     // For Earth landsat queries
-            { path: "mars", element: <Mars /> }         // Page for Mars queries
-            //{ path: "library", element: <Library /> }     (has yet to be implemented)
+            { path: "mars", element: <Mars /> },         // Page for Mars queries
+            { path: "library", element: <Library /> }
         ]
     }
 ])
