@@ -1,16 +1,9 @@
-import { useState, useEffect } from 'react'
-import { useSearchParams } from 'react-router-dom'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { NavLink, Outlet } from 'react-router-dom'
 import { css } from '@emotion/react'
 
-import APOD from './APOD.jsx'
-import Earth from './Earth.jsx'
-
 
 export default function Root(props) {
-    const { altPage } = props;
+    const { children } = props;
 
     const footerStyles = css`
         background-color: rgb(45,45,45);
@@ -89,7 +82,7 @@ export default function Root(props) {
                 </nav>
             </div>
 
-            <main css={mainStyles}>{altPage || <Outlet />}</main>
+            <main css={mainStyles}>{children || <Outlet />}</main>
 
             <footer css={footerStyles}>
                 <p>Data powered by the NASA developer API</p>
