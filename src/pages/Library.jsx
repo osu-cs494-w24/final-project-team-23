@@ -11,9 +11,6 @@ export default function Library() {
     const imgQuery = searchParams.get("q");
     const [ imgInputQuery, setImgInputQuery ] = useState(imgQuery || "");
 
-    const vidQuery = searchParams.get("q");
-    const [ vidInputQuery, setVidInputQuery ] = useState(vidQuery || "");
-
     const { fetchStatus, isLoading, error, data } = useQuery({
         queryKey: [ "imgLibrary", imgQuery],
         queryFn: async () => {
@@ -148,33 +145,33 @@ export default function Library() {
                     e.preventDefault();
                     setSearchParams({ q: imgInputQuery})
                 }}>
-                    <input value={imgQuery} onChange={(e) => setImgInputQuery(e.target.value)} />
+                    <input value={imgInputQuery} onChange={(e) => setImgInputQuery(e.target.value)} />
                     <button type="submit">Submit Query</button>
                 </form>
 
                 <div css={gridContainerStyles}>
-                    <NavLink css={linkStyles} to="/library?q=apollo+11">
+                    <NavLink css={linkStyles} to="/library?q=apollo+11" onClick={() => setImgInputQuery("apollo 11")}>
                         <div css={innerGridStyles}>
                             <img src="../apollo.png" alt="Apollo 11" css={iconStyles} />
                             <h3>Apollo 11</h3>
                         </div>
                     </NavLink>
 
-                    <NavLink css={linkStyles} to="/library?q=asteroid">
+                    <NavLink css={linkStyles} to="/library?q=asteroid" onClick={() => setImgInputQuery("asteroid")}>
                         <div css={innerGridStyles}>
                             <img src="../asteroid.png" alt="Asteroid" css={iconStyles} />
                             <h3>Asteroid</h3>
                         </div>
                     </NavLink>
 
-                    <NavLink css={linkStyles}>
+                    <NavLink css={linkStyles} to="/library?q=milky+way" onClick={() => setImgInputQuery("milky way")}>
                         <div css={innerGridStyles}>
                             <img src="../milky-way.png" alt="Milky Way" css={iconStyles} />
                             <h3>Milky Way</h3>
                         </div>
                     </NavLink>
 
-                    <NavLink css={linkStyles}>
+                    <NavLink css={linkStyles} to="/library?q=black+hole" onClick={() => setImgInputQuery("black hole")}>
                         <div css={innerGridStyles}>
                             <img src="../black-hole.png" alt="Black Hole" css={iconStyles} />
                             <h3>Black Hole</h3>
