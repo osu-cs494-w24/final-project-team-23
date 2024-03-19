@@ -74,7 +74,7 @@ export default function Root(props) {
         <>
             <div css={headerStyles}>
                 <nav>
-                    <h1 css={boxStyle}><NavLink to="/home" css={linkStyles}>Space Explorer</NavLink></h1>
+                    <h1 css={boxStyle}><NavLink to="/" css={linkStyles}>Space Explorer</NavLink></h1>
                     <h2 css={boxStyle}><NavLink to="/apod" css={linkStyles}>Picture of the Day</NavLink></h2>
                     <h2 css={boxStyle}><NavLink to="/earth" css={linkStyles}>Earth</NavLink></h2>
                     <h2 css={boxStyle}><NavLink to="/library" css={linkStyles}>Img/Vid Library</NavLink></h2>
