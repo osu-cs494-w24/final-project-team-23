@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useSearchParams, NavLink } from "react-router-dom";
 import { css } from "@emotion/react";
 import { useQuery } from "@tanstack/react-query";
-
+//data.collection.items[0].data[0].media_type
 import Spinner from "../Spinner";
 import ErrorPage from "./ErrorPage";
 
@@ -183,10 +183,19 @@ export default function Library() {
             <div css={innerDivStyle}>
                 {isLoading && <Spinner />}
                 {error && <ErrorPage />}
-                {data?.collection && data.collection.items.length > 0 && (
-                    <img src={data.collection.items[0].links[0].href} alt="NASA's library media" css={imgStyles} />
+                {data?.collection && data.collection.items.length > 0 && data.collection.items[0].data[0].media_type == "video" && (
+                    <video controls width="400" height="300">
+                        <source src={`https://images-assets.nasa.gov/video/${getParse(data.collection.items[0].data[0].nasa_id)}/${getParse(data.collection.items[0].data[0].nasa_id)}~orig.mp4`} type="video/mp4" />
+                    </video>
+                )}
+                {data?.collection && data.collection.items.length > 0 && data.collection.items[0].data[0].media_type == "image" && (
+                    <img src={data.collection.items[0].links[0].href} alt="NASA img library" css={imgStyles}/>
                 )}
             </div>
         </div>
     )
+}
+
+function getParse(string) {
+    return string.replace(/ /g, "+");
 }
