@@ -154,6 +154,29 @@ export default function SearchEarth() {
         li {
             list-style: none;
         }
+
+        //scroll bar styling
+        overflow: auto;
+
+        ::-webkit-scrollbar {
+            width: 10px;
+          }
+          
+          /* Track */
+          ::-webkit-scrollbar-track {
+            display: none;
+          }
+           
+          /* Handle */
+          ::-webkit-scrollbar-thumb {
+            background: rgb(70,70,70); 
+            border-radius: 10px;
+          }
+          
+          /* Handle on hover */
+          ::-webkit-scrollbar-thumb:hover {
+            background: rgb(45,45,45); 
+          }
     `
     const [searchParams, setSearchParams] = useSearchParams()
     const { q } = useParams();

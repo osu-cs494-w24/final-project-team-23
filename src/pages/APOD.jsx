@@ -83,6 +83,29 @@ export default function Search() {
             max-width: 40vw;
             max-height:30vw;
         }
+
+        //scroll bar styling
+        overflow: auto;
+
+        ::-webkit-scrollbar {
+            width: 10px;
+          }
+          
+          /* Track */
+          ::-webkit-scrollbar-track {
+            display: none;
+          }
+           
+          /* Handle */
+          ::-webkit-scrollbar-thumb {
+            background: rgb(70,70,70); 
+            border-radius: 10px;
+          }
+          
+          /* Handle on hover */
+          ::-webkit-scrollbar-thumb:hover {
+            background: rgb(45,45,45); 
+          }
     `
 
     useEffect(() => {
