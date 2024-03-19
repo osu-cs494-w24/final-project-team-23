@@ -31,7 +31,7 @@ const router = createBrowserRouter([
         element: <Root />,
         errorElement: <Root><ErrorPage /></Root>,
         children: [
-            { path: "home", element: <App /> },
+            { index: true, element: <App /> },
             { path: "apod", element: <APOD /> },     // For APOD queries
             { path: "earth", element: <Earth /> },     // For Earth landsat queries
             { path: "mars", element: <Mars /> },         // Page for Mars queries
