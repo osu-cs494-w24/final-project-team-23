@@ -100,17 +100,17 @@ export default function App() {
 
             <div css={innerDivStyles}>
                 <div css={cardStyle}>
-                    <img src="public/galaxy.png" alt="galaxy" css={iconStyles} />
+                    <img src="galaxy.png" alt="galaxy" css={iconStyles} />
                     <h1><NavLink to="/apod" css={linkStyles}>Astronomy Picture of the Day</NavLink></h1>
                 </div>
 
                 <div css={cardStyle}>
                     <h1><NavLink to="/earth" css={linkStyles}>Earth</NavLink></h1>
-                    <img src="public/planet-earth.png" alt="earth" css={iconStyles}  />
+                    <img src="planet-earth.png" alt="earth" css={iconStyles}  />
                 </div>
 
                 <div css={cardStyle}>
-                    <img src="public/media.png" alt="library" css={iconStyles}  />
+                    <img src="media.png" alt="library" css={iconStyles}  />
                     <h1><NavLink to="/library" css={linkStyles}>NASA's Image and Video Library</NavLink></h1>
                 </div>
 

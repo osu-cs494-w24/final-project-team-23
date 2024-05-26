@@ -86,7 +86,7 @@ export default function Root(props) {
 
             <footer css={footerStyles}>
                 <p>Data powered by the NASA developer API</p>
-                <img src="/public/nasalogo.png" alt="NASA logo" />
+                <img src="nasalogo.PNG" alt="NASA logo" />
             </footer>
         </>
     )
